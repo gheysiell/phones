@@ -47,7 +47,7 @@ class PhonesDetailsViewState extends State<PhonesDetailsView> {
           TitleAndInfo(title: 'Resolução da tela', info: phonesDetailsViewModel.phoneDetails?.displayResolution ?? ''),
           TitleAndInfo(title: 'Pixels da câmera', info: phonesDetailsViewModel.phoneDetails?.cameraPixels ?? ''),
           TitleAndInfo(title: 'Pixels do vídeo', info: phonesDetailsViewModel.phoneDetails?.videoPixels ?? ''),
-          TitleAndInfo(title: 'RAM', info: phonesDetailsViewModel.phoneDetails?.ram ?? ''),
+          TitleAndInfo(title: 'Memória', info: phonesDetailsViewModel.phoneDetails?.ram ?? ''),
           TitleAndInfo(title: 'Chip', info: phonesDetailsViewModel.phoneDetails?.chipset ?? ''),
           TitleAndInfo(title: 'Tamanho da bateria', info: phonesDetailsViewModel.phoneDetails?.batterySize ?? ''),
           TitleAndInfo(title: 'Tipo da bateria', info: phonesDetailsViewModel.phoneDetails?.batteryType ?? ''),
