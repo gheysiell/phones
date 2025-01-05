@@ -152,12 +152,12 @@ class PhonesDetailsViewState extends State<PhonesDetailsView> {
                                   ),
                                   child: CachedNetworkImage(
                                     imageUrl: phonesDetailsViewModel.phoneDetails!.imageUrl,
-                                    placeholder: (context, string) => const Center(
+                                    placeholder: (context, url) => const Center(
                                       child: CircularProgressIndicator(
                                         strokeWidth: 3,
                                       ),
                                     ),
-                                    errorWidget: (context, string, object) => const Icon(
+                                    errorWidget: (context, url, error) => const Icon(
                                       Icons.phone_android_outlined,
                                       size: 50,
                                       color: Palette.grayLight,
