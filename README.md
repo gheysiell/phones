@@ -13,12 +13,12 @@ The project follows the **Clean architecture with MVVM** architecture with a **f
 
 ## Project Statistics
 
-- **Lines of code**: 1,489
-- **Files**: 40
-- **Folders**: 42
+- **Lines of code**: 1,865
+- **Files**: 42
+- **Folders**: 41
 - **Screens**: 2
 - **Packages**: 11
-- **Average lines per file**: 37
+- **Average lines per file**: 44
 
 ## Text Editor Settings
 

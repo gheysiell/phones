@@ -18,7 +18,7 @@ class PhonesDetailsDataSourceRemoteHttpImpl implements PhonesDetailsDataSourceRe
       phoneDetailsDto: null,
       responseStatus: ResponseStatus.success,
     );
-    final Uri uri = Uri.parse('${Constants.baseUrl}/13123123');
+    final Uri uri = Uri.parse('${Constants.baseUrl}2164/get+phone+details?phone_id=$id');
     final Map<String, String> header = {
       'Authorization': 'Bearer ${Constants.apiKey}',
     };
@@ -32,7 +32,7 @@ class PhonesDetailsDataSourceRemoteHttpImpl implements PhonesDetailsDataSourceRe
         throw Exception();
       }
 
-      Map<String, dynamic> body = json.decode(response.body);
+      Map<String, dynamic> body = json.decode(response.body)['data'];
 
       phoneDetailsResponseDto.phoneDetailsDto = PhoneDetailsDto.fromMap(body);
     } on TimeoutException {

@@ -4,6 +4,7 @@ import 'package:phones/features/phones/presentation/viewmodels/phones_viewmodel.
 import 'package:phones/features/phones_details/presentation/views/phones_details_view.dart';
 import 'package:phones/shared/input_styles.dart';
 import 'package:phones/shared/palette.dart';
+import 'package:phones/shared/widgets/not_found.dart';
 import 'package:phones/utils/functions.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +21,7 @@ class PhonesViewState extends State<PhonesView> {
   final TextEditingController controllerSearch = TextEditingController();
   final FocusNode focusSearch = FocusNode();
   final ScrollController scrollController = ScrollController();
+  final double heightBrandsList = 60;
   late PhonesViewModel phonesViewModel;
   bool initialized = false;
 
@@ -37,7 +39,7 @@ class PhonesViewState extends State<PhonesView> {
 
       WidgetsBinding.instance.addPostFrameCallback((_) {
         phonesViewModel.getBrands();
-        phonesViewModel.getPhones('', 33);
+        phonesViewModel.getPhones('', phonesViewModel.indexBrandSelected + 1);
       });
 
       scrollController.addListener(() {
@@ -88,7 +90,7 @@ class PhonesViewState extends State<PhonesView> {
                             tooltip: 'Limpar pesquisa',
                             onPressed: () async {
                               controllerSearch.clear();
-                              await phonesViewModel.getPhones('', 33);
+                              await phonesViewModel.getPhones('', phonesViewModel.indexBrandSelected + 1);
                             },
                             icon: const Icon(
                               Icons.clear_rounded,
@@ -104,7 +106,7 @@ class PhonesViewState extends State<PhonesView> {
                     disabledBorder: InputStyles.inputBorderSearch,
                   ),
                   onFieldSubmitted: (String value) async {
-                    await phonesViewModel.getPhones(controllerSearch.text, 33);
+                    await phonesViewModel.getPhones(controllerSearch.text, phonesViewModel.indexBrandSelected + 1);
                   },
                 )
               : const Text(
@@ -117,12 +119,11 @@ class PhonesViewState extends State<PhonesView> {
                 ),
           leading: Container(
             alignment: Alignment.center,
-            width: 50,
+            width: 55,
             child: Center(
               child: Image.asset(
                 'assets/images/icon.png',
-                fit: BoxFit.contain,
-                width: 50,
+                width: 55,
               ),
             ),
           ),
@@ -155,7 +156,7 @@ class PhonesViewState extends State<PhonesView> {
             Column(
               children: [
                 Container(
-                  height: 60,
+                  height: heightBrandsList,
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(
                     vertical: 8,
@@ -164,42 +165,61 @@ class PhonesViewState extends State<PhonesView> {
                       ? const Center(
                           child: CircularProgressIndicator(),
                         )
-                      : ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: phonesViewModel.brands.length,
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          itemBuilder: (BuildContext context, int index) {
-                            return Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                color:
-                                    phonesViewModel.indexBrandSelected == index ? Palette.primary : Palette.secondary,
+                      : !phonesViewModel.loadingBrands && phonesViewModel.brands.isEmpty
+                          ? ElevatedButton(
+                              onPressed: () async {
+                                await phonesViewModel.getBrands();
+                              },
+                              style: ElevatedButton.styleFrom(
+                                shape: const CircleBorder(),
+                                padding: EdgeInsets.zero,
+                                backgroundColor: Palette.primary,
                               ),
-                              margin: const EdgeInsets.only(right: 8),
-                              child: TextButton(
-                                onPressed: () async {
-                                  phonesViewModel.setIndexBrandSelected(index);
-                                  await phonesViewModel.getPhones('', phonesViewModel.brands[index].id);
-                                },
-                                style: TextButton.styleFrom(
-                                  padding: const EdgeInsets.symmetric(horizontal: 18),
-                                  alignment: Alignment.center,
-                                  shape: RoundedRectangleBorder(
+                              child: const Icon(
+                                Icons.refresh_rounded,
+                                size: 30,
+                                color: Palette.white,
+                              ),
+                            )
+                          : ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: phonesViewModel.brands.length,
+                              padding: const EdgeInsets.symmetric(horizontal: 8),
+                              itemBuilder: (BuildContext context, int index) {
+                                return Container(
+                                  decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(12),
+                                    color: phonesViewModel.indexBrandSelected == index
+                                        ? Palette.primary
+                                        : Palette.secondary,
                                   ),
-                                ),
-                                child: Text(
-                                  Functions.capitalFirstLetter(phonesViewModel.brands[index].name),
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
-                                    color: phonesViewModel.indexBrandSelected == index ? Palette.white : Palette.gray,
+                                  margin: const EdgeInsets.only(right: 8),
+                                  child: TextButton(
+                                    onPressed: () async {
+                                      phonesViewModel.setIndexBrandSelected(index);
+                                      controllerSearch.clear();
+                                      await phonesViewModel.getPhones('', phonesViewModel.brands[index].id);
+                                    },
+                                    style: TextButton.styleFrom(
+                                      padding: const EdgeInsets.symmetric(horizontal: 18),
+                                      alignment: Alignment.center,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                    ),
+                                    child: Text(
+                                      Functions.capitalFirstLetter(phonesViewModel.brands[index].name),
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600,
+                                        color:
+                                            phonesViewModel.indexBrandSelected == index ? Palette.white : Palette.gray,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
+                                );
+                              },
+                            ),
                 ),
                 Expanded(
                   child: phonesViewModel.loading
@@ -208,30 +228,16 @@ class PhonesViewState extends State<PhonesView> {
                         )
                       : RefreshIndicator(
                           onRefresh: () async {
-                            await phonesViewModel.getPhones(controllerSearch.text, 33);
+                            await phonesViewModel.getPhones(
+                                controllerSearch.text, phonesViewModel.indexBrandSelected + 1);
                           },
                           child: !phonesViewModel.loading && phonesViewModel.phones.isEmpty
-                              ? const SingleChildScrollView(
-                                  physics: AlwaysScrollableScrollPhysics(),
-                                  child: Column(
-                                    children: [
-                                      Spacer(),
-                                      Icon(
-                                        Icons.phone_android_outlined,
-                                        size: 50,
-                                        color: Palette.primary,
-                                      ),
-                                      Text(
-                                        'Telefones não encontrados',
-                                        style: TextStyle(
-                                          color: Palette.gray,
-                                          fontSize: 30,
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                      Spacer(),
-                                    ],
-                                  ),
+                              ? SingleChildScrollView(
+                                  physics: const AlwaysScrollableScrollPhysics(),
+                                  child: SizedBox(
+                                      height: Functions.getHeightBody(context) - heightBrandsList,
+                                      width: double.infinity,
+                                      child: const NotFoundWidget(title: 'Telefones não encontrados')),
                                 )
                               : ListView.builder(
                                   itemCount: phonesViewModel.phones.length,
@@ -290,7 +296,7 @@ class PhonesViewState extends State<PhonesView> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) => PhonesDetailsView(
-                                              phoneId: phonesViewModel.phones[index].id,
+                                              id: phonesViewModel.phones[index].id,
                                             ),
                                           ),
                                         );

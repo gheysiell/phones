@@ -32,7 +32,7 @@ class PhonesDetailsViewModel extends ChangeNotifier {
     setLoading(false);
 
     if (phoneDetailsResponse.responseStatus != ResponseStatus.success) {
-      await Functions.showMessageResponseStatus(
+      Functions.showMessageResponseStatus(
         phoneDetailsResponse.responseStatus,
         'Buscar',
         'os',

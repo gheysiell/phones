@@ -114,4 +114,12 @@ class Functions {
     if (text.isEmpty) return '';
     return text.substring(0, 1).toUpperCase() + text.substring(1, text.length).toLowerCase();
   }
+
+  static double getHeightBody(BuildContext context) {
+    return MediaQuery.of(context).size.height - (MediaQuery.of(context).padding.top + kToolbarHeight);
+  }
+
+  static bool isPair(int value) {
+    return value % 2 == 0;
+  }
 }

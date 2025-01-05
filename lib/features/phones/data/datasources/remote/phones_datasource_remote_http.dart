@@ -28,6 +28,7 @@ class PhonesDataSourceRemoteHttpImpl implements PhonesDataSourceRemoteHttp {
 
     try {
       final response = await http.get(uri, headers: header).timeout(Constants.timeoutHttpDuration);
+      Map body = json.decode(response.body);
 
       if (response.statusCode != 200) {
         log('bad request in PhonesDataSourceRemoteHttpImpl.getPhones',
@@ -35,9 +36,11 @@ class PhonesDataSourceRemoteHttpImpl implements PhonesDataSourceRemoteHttp {
         throw Exception();
       }
 
-      List<dynamic> phones = json.decode(response.body)['data'];
+      if (response.statusCode == 200 && body['success']) {
+        List<dynamic> phones = body['data'];
 
-      phoneResponseDto.phonesDto = phones.map((phone) => PhoneDto.fromMap(phone)).toList();
+        phoneResponseDto.phonesDto = phones.map((phone) => PhoneDto.fromMap(phone)).toList();
+      }
     } on TimeoutException {
       log('${Constants.timeoutGenericMessage} PhonesDataSourceRemoteHttpImpl.getPhones');
       phoneResponseDto.responseStatus = ResponseStatus.timeout;

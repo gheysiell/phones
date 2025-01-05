@@ -67,7 +67,7 @@ class PhonesViewModel extends ChangeNotifier {
     setLoadingBrands(false);
 
     if (brandResponse.responseStatus != ResponseStatus.success) {
-      await Functions.showMessageResponseStatus(
+      Functions.showMessageResponseStatus(
         brandResponse.responseStatus,
         'Buscar',
         'as',
@@ -89,7 +89,7 @@ class PhonesViewModel extends ChangeNotifier {
     setLoading(false);
 
     if (phoneResponse.responseStatus != ResponseStatus.success) {
-      await Functions.showMessageResponseStatus(
+      Functions.showMessageResponseStatus(
         phoneResponse.responseStatus,
         'Buscar',
         'os',
