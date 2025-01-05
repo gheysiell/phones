@@ -86,7 +86,7 @@ class PhonesDetailsViewState extends State<PhonesDetailsView> {
         title: const Text(
           'Phone',
           style: TextStyle(
-            fontSize: 20,
+            fontSize: 22,
             fontWeight: FontWeight.w600,
             color: Palette.white,
           ),
@@ -130,6 +130,7 @@ class PhonesDetailsViewState extends State<PhonesDetailsView> {
                       vertical: 10,
                       horizontal: 5,
                     ),
+                    physics: const AlwaysScrollableScrollPhysics(),
                     itemCount: titlesAndInfos.length + 1,
                     itemBuilder: (BuildContext context, int index) {
                       int indexAfterImage = index - 1;

@@ -76,7 +76,7 @@ class PhonesViewState extends State<PhonesView> {
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(
                       horizontal: 14,
-                      vertical: 6,
+                      vertical: 8,
                     ),
                     filled: true,
                     fillColor: Palette.white,
@@ -112,7 +112,7 @@ class PhonesViewState extends State<PhonesView> {
               : const Text(
                   'Phones',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 22,
                     fontWeight: FontWeight.w600,
                     color: Palette.white,
                   ),
@@ -242,8 +242,8 @@ class PhonesViewState extends State<PhonesView> {
                               : ListView.builder(
                                   itemCount: phonesViewModel.phones.length,
                                   padding: const EdgeInsets.symmetric(vertical: 6),
+                                  physics: const AlwaysScrollableScrollPhysics(),
                                   controller: scrollController,
-                                  shrinkWrap: true,
                                   itemBuilder: (BuildContext context, int index) {
                                     return ListTile(
                                       leading: SizedBox(
