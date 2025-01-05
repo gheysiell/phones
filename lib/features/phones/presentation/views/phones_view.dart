@@ -235,9 +235,10 @@ class PhonesViewState extends State<PhonesView> {
                               ? SingleChildScrollView(
                                   physics: const AlwaysScrollableScrollPhysics(),
                                   child: SizedBox(
-                                      height: Functions.getHeightBody(context) - heightBrandsList,
-                                      width: double.infinity,
-                                      child: const NotFoundWidget(title: 'Telefones não encontrados')),
+                                    height: Functions.getHeightBody(context) - heightBrandsList,
+                                    width: double.infinity,
+                                    child: const NotFoundWidget(title: 'Telefones não encontrados'),
+                                  ),
                                 )
                               : ListView.builder(
                                   itemCount: phonesViewModel.phones.length,

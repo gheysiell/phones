@@ -140,29 +140,30 @@ class PhonesDetailsViewState extends State<PhonesDetailsView> {
                               height: 250,
                               margin: const EdgeInsets.only(bottom: 20),
                               child: TextButton(
-                                  onPressed: () {
-                                    Functions.showNetworkImageFullScreen(
-                                        context, phonesDetailsViewModel.phoneDetails!.imageUrl);
-                                  },
-                                  style: TextButton.styleFrom(
-                                    alignment: Alignment.center,
-                                    shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.zero,
+                                onPressed: () {
+                                  Functions.showNetworkImageFullScreen(
+                                      context, phonesDetailsViewModel.phoneDetails!.imageUrl);
+                                },
+                                style: TextButton.styleFrom(
+                                  alignment: Alignment.center,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.zero,
+                                  ),
+                                ),
+                                child: CachedNetworkImage(
+                                  imageUrl: phonesDetailsViewModel.phoneDetails!.imageUrl,
+                                  placeholder: (context, url) => const Center(
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 3,
                                     ),
                                   ),
-                                  child: CachedNetworkImage(
-                                    imageUrl: phonesDetailsViewModel.phoneDetails!.imageUrl,
-                                    placeholder: (context, url) => const Center(
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 3,
-                                      ),
-                                    ),
-                                    errorWidget: (context, url, error) => const Icon(
-                                      Icons.phone_android_outlined,
-                                      size: 50,
-                                      color: Palette.grayLight,
-                                    ),
-                                  )),
+                                  errorWidget: (context, url, error) => const Icon(
+                                    Icons.phone_android_outlined,
+                                    size: 50,
+                                    color: Palette.grayLight,
+                                  ),
+                                ),
+                              ),
                             )
                           : Column(
                               children: [
