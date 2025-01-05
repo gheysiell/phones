@@ -320,7 +320,7 @@ class PhonesViewState extends State<PhonesView> {
                     end: Alignment.bottomCenter,
                     colors: [
                       Colors.black.withOpacity(0.08),
-                      Colors.black.withOpacity(0.03),
+                      Colors.black.withOpacity(0.02),
                       Colors.transparent,
                     ],
                     stops: const [
