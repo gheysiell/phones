@@ -237,7 +237,7 @@ class PhonesViewState extends State<PhonesView> {
                                   child: SizedBox(
                                     height: Functions.getHeightBody(context) - heightBrandsList,
                                     width: double.infinity,
-                                    child: const NotFoundWidget(title: 'Telefones não encontrados'),
+                                    child: const NotFoundWidget(title: 'Celulares não encontrados'),
                                   ),
                                 )
                               : ListView.builder(

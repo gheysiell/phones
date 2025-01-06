@@ -118,7 +118,7 @@ class PhonesDetailsViewState extends State<PhonesDetailsView> {
                 child: SizedBox(
                   height: Functions.getHeightBody(context),
                   width: double.infinity,
-                  child: const NotFoundWidget(title: 'Detalhes do telefone não encontrados'),
+                  child: const NotFoundWidget(title: 'Detalhes do celular não encontrados'),
                 ),
               )
             : phonesDetailsViewModel.loading
