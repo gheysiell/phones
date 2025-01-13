@@ -69,7 +69,7 @@ class PhonesViewModel extends ChangeNotifier {
     if (brandResponse.responseStatus != ResponseStatus.success) {
       Functions.showMessageResponseStatus(
         brandResponse.responseStatus,
-        'Buscar',
+        'buscar',
         'as',
         'marcas',
       );
@@ -91,7 +91,7 @@ class PhonesViewModel extends ChangeNotifier {
     if (phoneResponse.responseStatus != ResponseStatus.success) {
       Functions.showMessageResponseStatus(
         phoneResponse.responseStatus,
-        'Buscar',
+        'buscar',
         'os',
         'celulares',
       );

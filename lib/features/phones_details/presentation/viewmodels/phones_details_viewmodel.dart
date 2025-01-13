@@ -34,7 +34,7 @@ class PhonesDetailsViewModel extends ChangeNotifier {
     if (phoneDetailsResponse.responseStatus != ResponseStatus.success) {
       Functions.showMessageResponseStatus(
         phoneDetailsResponse.responseStatus,
-        'Buscar',
+        'buscar',
         'os',
         'detalhes do celular',
       );
